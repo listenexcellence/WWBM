@@ -7,7 +7,7 @@
 </head>
 <body>
     <div class="rows">
-        <img alt="mute" src="assets/img/mdi_mute.png">
+        <img id="mute" alt="mute" src="assets/img/mdi_mute.png">
         <div class="middle">
             <h3>00:30</h3>
             <div class="options">
@@ -52,5 +52,28 @@
             <p class="prize active">N 1,000</p>
         </div>
     </div>
+    <audio id="sure" src="assets/sound/final.mp3" ></audio>
+    <audio id="start" autoplay src="assets/sound/start.mp3"></audio>
+    <audio id="ingame" src="assets/sound/ingame.mp3" autoplay loop></audio>
 </body>
+<script>
+    const buttons = document.getElementsByClassName("ans"); // This returns an HTMLCollection
+const sound = document.getElementById("sure");
+const mute = document.getElementById("mute");
+const ingame = document.getElementById("ingame");
+
+
+// Convert HTMLCollection to an array and then use forEach
+Array.from(buttons).forEach(button => {
+  button.addEventListener("click", () => {
+    sound.play();
+    button.classList.toggle("active")
+  });
+});
+
+mute.addEventListener("click", () => {
+    ingame.muted = !ingame.muted;
+    mute.textContent = ingame.muted ? "Unmute" : "Mute";
+})
+</script>
 </html>
