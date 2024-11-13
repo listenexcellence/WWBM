@@ -141,3 +141,23 @@ h3{
 .middle2 p{
     font-size: 13px;
 }
+.ruleBody{
+    padding: 50px 100px 20px 100px;
+    color: #fff;
+}
+.ruleBody p{
+    color: #fff;
+    padding: 20px 0 0 0;
+}
+.rule{
+    padding: 10px 0 40px 0;
+}
+footer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 3rem;
+}
+footer p{
+    font-size: 12px;
+}
