@@ -3,6 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: Inter;
+    color: #fff;
 }
 body{
     background-color: #130F21;
@@ -114,6 +115,10 @@ h3{
     background-color: #ffab24;
     color: #fff;
 }
+.ans.won{
+    background-color: green;
+    color: #fff;
+}
 .ans p{
     font-size: 15px;
     color: #fff;
@@ -160,4 +165,38 @@ footer{
 }
 footer p{
     font-size: 12px;
+}
+.popup {
+    display: none !important; /* Hidden by default */
+    position: absolute;
+    top: 6%;
+    left: 15%;
+    width: 70%;
+    height: auto;
+    outline: 1px solid #F7B854;
+    background-color: #130F21;
+    padding: 30px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    border-radius: 10px;
+}
+
+.popup.open {
+    display: flex !important; /* Display popup when 'open' class is added */
+}
+
+.popup img {
+    width: 60%;
+    height: 80%;
+    border-radius: 5px;
+}
+
+.popup button {
+    padding: 10px 40px;
+    background-color: #ffab24;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
 }

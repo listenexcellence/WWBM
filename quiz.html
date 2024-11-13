@@ -1,79 +1,111 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="assets/css/index.css" />
     <title>WWBM</title>
-</head>
-<body>
+  </head>
+  <body>
     <div class="rows">
-        <img id="mute" alt="mute" src="assets/img/mdi_mute.png">
-        <div class="middle">
-            <h3>00:30</h3>
-            <div class="options">
-                <img alt="audience" src="assets/img/audience.png">
-                <img alt="audience" src="assets/img/50.png">
-                <img alt="audience" src="assets/img/phone.png">
-            </div>
-            <img class="logo" alt="logo" src="assets/img/logo2.png">
-            <div class="questContain">
-                <div class="quest"><p>What is the Capital of Nigeria?</p></div>
-                <div class="answerContain">
-                    <div class="ans">
-                        <p><span>A:</span> Abuja</p>
-                    </div>
-                    <div class="ans">
-                        <p><span>B:</span> Lagos</p>
-                    </div>
-                    <div class="ans">
-                        <p><span>C:</span> Ondo</p>
-                    </div>
-                    <div class="ans">
-                        <p><span>D:</span> Kaduna</p>
-                    </div>
-                </div>
-            </div>
+      <img id="mute" alt="mute" src="assets/img/mdi_mute.png" />
+      <div class="middle">
+        <h3>00:30</h3>
+        <div class="options">
+          <img alt="audience" src="assets/img/audience.png" />
+          <img alt="audience" src="assets/img/50.png" />
+          <img alt="audience" src="assets/img/phone.png" />
         </div>
-        <div class="middle2">
-            <p>N 1,000,000</p>
-            <p>N 500,000</p>
-            <p>N 250,000</p>
-            <p>N 125,000</p>
-            <p>N 640,000</p>
-            <p>N 320,000</p>
-            <p>N 160,000</p>
-            <p>N 80,000</p>
-            <p>N 40,000</p>
-            <p>N 20,000</p>
-            <p>N 10,000</p>
-            <p>N 5,000</p>
-            <p>N 3,000</p>
-            <p>N 2,000</p>
-            <p class="prize active">N 1,000</p>
+        <img class="logo" alt="logo" src="assets/img/logo2.png" />
+        <div class="questContain">
+          <div class="quest"><p>What is the Capital of Nigeria?</p></div>
+          <div class="answerContain">
+            <div class="ans">
+              <p><span>A:</span> Abuja</p>
+            </div>
+            <div class="ans">
+              <p><span>B:</span> Lagos</p>
+            </div>
+            <div class="ans">
+              <p><span>C:</span> Ondo</p>
+            </div>
+            <div class="ans">
+              <p><span>D:</span> Kaduna</p>
+            </div>
+          </div>
         </div>
+      </div>
+      <div class="middle2">
+        <p>N 1,000,000</p>
+        <p>N 500,000</p>
+        <p>N 250,000</p>
+        <p>N 125,000</p>
+        <p>N 640,000</p>
+        <p>N 320,000</p>
+        <p>N 160,000</p>
+        <p>N 80,000</p>
+        <p>N 40,000</p>
+        <p>N 20,000</p>
+        <p>N 10,000</p>
+        <p>N 5,000</p>
+        <p>N 3,000</p>
+        <p>N 2,000</p>
+        <p class="prize active">N 1,000</p>
+      </div>
     </div>
-    <audio id="sure" src="assets/sound/final.mp3" ></audio>
+    <div class="popup">
+      <h1>You Got That Right!</h1>
+      <h3>Prepare for the Next Round</h3>
+      <img alt="shake" src="assets/img/shake.jpg" />
+      <button id="close" type="button">Next</button>
+    </div>
+
+    <audio id="sure" src="assets/sound/final.mp3"></audio>
     <audio id="start" autoplay src="assets/sound/start.mp3"></audio>
     <audio id="ingame" src="assets/sound/ingame.mp3" autoplay loop></audio>
-</body>
-<script>
+    <audio id="win" src="assets/sound/win.mp3"></audio>
+  </body>
+  <script>
     const buttons = document.getElementsByClassName("ans"); // This returns an HTMLCollection
-const sound = document.getElementById("sure");
-const mute = document.getElementById("mute");
-const ingame = document.getElementById("ingame");
+    const sound = document.getElementById("sure");
+    const mute = document.getElementById("mute");
+    const ingame = document.getElementById("ingame");
+    const popup = document.querySelector(".popup");
+    const closee = document.getElementById("close");
+    const win = document.getElementById("win");
 
+    // Convert HTMLCollection to an array and then use forEach
+    for (let i = 0; i < buttons.length; i++) {
+      let clickCount = 0; // Counter to keep track of clicks
+      const button = buttons[i];
+      button.addEventListener("click", () => {
+        clickCount += 1;
 
-// Convert HTMLCollection to an array and then use forEach
-Array.from(buttons).forEach(button => {
-  button.addEventListener("click", () => {
-    sound.play();
-    button.classList.toggle("active")
-  });
-});
+        if (clickCount === 1) {
+          sound.play();
+          button.classList.add("active1"); // First click class
+        } else if (clickCount === 2) {
+          popup.classList.add("open");
+          win.play();
+          button.classList.remove("active1"); // Remove first class
+          button.classList.add("won"); // Add second click class
+        }
 
-mute.addEventListener("click", () => {
-    ingame.muted = !ingame.muted;
-    mute.textContent = ingame.muted ? "Unmute" : "Mute";
-})
-</script>
+        // Reset counter after the second click
+        if (clickCount >= 2) {
+          clickCount = 0;
+          button.classList.remove("won")
+        }
+      });
+    }
+
+    closee.addEventListener("click", () => {
+      popup.classList.remove("open");
+      console.log("close");
+    });
+
+    mute.addEventListener("click", () => {
+      ingame.muted = !ingame.muted;
+      mute.textContent = ingame.muted ? "Unmute" : "Mute";
+    });
+  </script>
 </html>
