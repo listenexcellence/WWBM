@@ -4,137 +4,91 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="assets/css/index.css" />
     <title>WWBM</title>
+  <style>
+.navigation {
+text-align: right;
+margin-top: 30px;
+}
+#next-arrow {
+font-size: 24px;
+padding: 10px 10px 10px 10px;
+background-color: #6a93a6;
+color: #fff;
+border: none;
+border-radius: 10px;
+cursor: pointer;
+}
+  </style>
   </head>
   <body>
     <div class="rows">
       <img id="mute" alt="mute" src="assets/img/mdi_mute.png" />
       <div class="middle">
-        <h3 id="timerDisplay">00:60</h3>
         <div class="options">
-          <img alt="audience" src="assets/img/audience.png" />
-          <img alt="audience" src="assets/img/50.png" />
-          <img alt="audience" src="assets/img/phone.png" />
+          <img alt="audience" id="askAudienceLifeline" onclick="useAskAudience()"src="assets/img/audience.png">
+                <img alt="audience" id="fiftyFiftyLifeline" src="assets/img/50.png" onclick="useFiftyFifty()">
+                <img alt="audience"id="phoneFriendLifeline" src="assets/img/phone.png"  onclick="usePhoneAFriend()">
+                <div id="phoneTimer" style="display: none; font-weight: bold; color: #f00;">30</div>
         </div>
         <img class="logo" alt="logo" src="assets/img/logo2.png" />
         <div class="questContain">
           <div class="quest"><p>What is the Capital of Nigeria?</p></div>
           <div class="answerContain">
-            <div class="ans">
-              <p><span>A:</span> Abuja</p>
-            </div>
-            <div class="ans">
-              <p><span>B:</span> Lagos</p>
-            </div>
-            <div class="ans">
-              <p><span>C:</span> Ondo</p>
-            </div>
-            <div class="ans">
-              <p><span>D:</span> Kaduna</p>
-            </div>
+              <div class="ans">
+                  <p><span>A:</span> Abuja</p>
+              </div>
+              <div class="ans">
+                  <p><span>B:</span> Lagos</p>
+              </div>
+              <div class="ans">
+                  <p><span>C:</span> Ondo</p>
+              </div>
+              <div class="ans">
+                  <p><span>D:</span> Kaduna</p>
+              </div>
+              <div class="price">
+                  <p></p>
+              </div>
+              <div class="navigation">
+                  <button id="next-arrow">→</button>
+              </div>
+              
           </div>
-        </div>
+      </div>
       </div>
       <div class="middle2">
-        <p>N 1,000,000</p>
-        <p>N 500,000</p>
-        <p>N 250,000</p>
-        <p>N 125,000</p>
-        <p>N 640,000</p>
-        <p>N 320,000</p>
-        <p>N 160,000</p>
-        <p>N 80,000</p>
-        <p>N 40,000</p>
-        <p>N 20,000</p>
-        <p>N 10,000</p>
-        <p>N 5,000</p>
-        <p>N 3,000</p>
-        <p>N 2,000</p>
-        <p class="prize active">N 1,000</p>
+        <p class="prize">N 50,000</p>
+            <p class="prize">N 40,000</p>
+            <p class="prize">N 35,000</p>
+            <p class="prize">N 30,000</p>
+            <p class="prize">N 25,000</p>
+            <p class="prize">N 20,000</p>
+            <p class="prize">N 17,500</p>
+            <p class="prize">N 14,500</p>
+            <p class="prize">N 12,000</p>
+            <p class="prize">N 9,500</p>
+            <p class="prize">N 7,500</p>
+            <p class="prize">N 5,500</p>
+            <p class="prize">N 4,000</p>
+            <p class="prize">N 2,500</p>
+            <p class="prize">N 1,000</p>
       </div>
     </div>
-    <div class="popup">
-      <h1>You Got That Right!</h1>
-      <h3>Prepare for the Next Round</h3>
-      <img alt="shake" src="assets/img/shake.jpg" />
-      <button id="close" type="button">Next</button>
-    </div>
-
     <audio id="sure" src="assets/sound/final.mp3"></audio>
     <audio id="start" autoplay src="assets/sound/start.mp3"></audio>
     <audio id="ingame" src="assets/sound/ingame.mp3" autoplay loop></audio>
     <audio id="win" src="assets/sound/win.mp3"></audio>
-  </body>
-  <script>
-    const buttons = document.getElementsByClassName("ans"); // This returns an HTMLCollection
+    </body>
+    <script src="script.js"></script>
+    <script> 
     const sound = document.getElementById("sure");
     const mute = document.getElementById("mute");
     const ingame = document.getElementById("ingame");
-    const popup = document.querySelector(".popup");
-    const closee = document.getElementById("close");
     const win = document.getElementById("win");
-
-    window.onload = function () {
-      let timeLeft = 60; // Set the timer to 60 seconds
-      const timerDisplay = document.getElementById("timerDisplay"); // Get the element to display the time
-
-      // Update the timer every second
-      const countdown = setInterval(() => {
-        if (timeLeft > 0) {
-          timeLeft--; // Decrease time by 1 second
-
-          // Calculate minutes and seconds
-          const minutes = Math.floor(timeLeft / 60);
-          const seconds = timeLeft % 60;
-
-          // Format minutes and seconds as "MM:SS" (e.g., "00:30")
-          timerDisplay.textContent = `${formatTime(minutes)}:${formatTime(
-            seconds
-          )}`;
-        } else {
-          clearInterval(countdown); // Stop the timer when it reaches 0
-          timerDisplay.textContent = "Time's up!"; // Optional: Display a message when time's up
-        }
-      }, 1000); // 1000 milliseconds = 1 second
-
-      // Function to format time (e.g., "5" becomes "05")
-      function formatTime(time) {
-        return time < 10 ? `0${time}` : time;
-      }
-    };
-
-    // Convert HTMLCollection to an array and then use forEach
-    for (let i = 0; i < buttons.length; i++) {
-      let clickCount = 0; // Counter to keep track of clicks
-      const button = buttons[i];
-      button.addEventListener("click", () => {
-        clickCount += 1;
-
-        if (clickCount === 1) {
-          sound.play();
-          button.classList.add("active1"); // First click class
-        } else if (clickCount === 2) {
-          popup.classList.add("open");
-          win.play();
-          button.classList.remove("active1"); // Remove first class
-          button.classList.add("won"); // Add second click class
-        }
-
-        // Reset counter after the second click
-        if (clickCount >= 2) {
-          clickCount = 0;
-          button.classList.remove("won");
-        }
-      });
-    }
-
-    closee.addEventListener("click", () => {
-      popup.classList.remove("open");
-      console.log("close");
-    });
-
+    
     mute.addEventListener("click", () => {
-      ingame.muted = !ingame.muted;
-      mute.textContent = ingame.muted ? "Unmute" : "Mute";
-    });
-  </script>
-</html>
+    ingame.muted = !ingame.muted;
+    mute.textContent = ingame.muted ? "Unmute" : "Mute";
+  });
+    </script>
+   </html>
