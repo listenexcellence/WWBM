@@ -4,91 +4,104 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" type="text/css" href="assets/css/index.css" />
     <title>WWBM</title>
-  <style>
-.navigation {
-text-align: right;
-margin-top: 30px;
-}
-#next-arrow {
-font-size: 24px;
-padding: 10px 10px 10px 10px;
-background-color: #6a93a6;
-color: #fff;
-border: none;
-border-radius: 10px;
-cursor: pointer;
-}
-  </style>
+    <style>
+      .navigation {
+        text-align: right;
+        margin-top: 30px;
+      }
+      #next-arrow {
+        font-size: 24px;
+        padding: 10px 10px 10px 10px;
+        background-color: #6a93a6;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+      }
+    </style>
   </head>
   <body>
     <div class="rows">
       <img id="mute" alt="mute" src="assets/img/mdi_mute.png" />
       <div class="middle">
         <div class="options">
-          <img alt="audience" id="askAudienceLifeline" onclick="useAskAudience()"src="assets/img/audience.png">
-                <img alt="audience" id="fiftyFiftyLifeline" src="assets/img/50.png" onclick="useFiftyFifty()">
-                <img alt="audience"id="phoneFriendLifeline" src="assets/img/phone.png"  onclick="usePhoneAFriend()">
-                <div id="phoneTimer" style="display: none; font-weight: bold; color: #f00;">30</div>
+          <img
+            alt="audience"
+            id="askAudienceLifeline"
+            onclick="useAskAudience()"
+            src="assets/img/audience.png"
+          />
+          <img
+            alt="audience"
+            id="fiftyFiftyLifeline"
+            src="assets/img/50.png"
+            onclick="useFiftyFifty()"
+          />
+          <img
+            alt="audience"
+            id="phoneFriendLifeline"
+            src="assets/img/phone.png"
+            onclick="usePhoneAFriend()"
+          />
         </div>
         <img class="logo" alt="logo" src="assets/img/logo2.png" />
         <div class="questContain">
           <div class="quest"><p>What is the Capital of Nigeria?</p></div>
           <div class="answerContain">
-              <div class="ans">
-                  <p><span>A:</span> Abuja</p>
-              </div>
-              <div class="ans">
-                  <p><span>B:</span> Lagos</p>
-              </div>
-              <div class="ans">
-                  <p><span>C:</span> Ondo</p>
-              </div>
-              <div class="ans">
-                  <p><span>D:</span> Kaduna</p>
-              </div>
-              <div class="price">
-                  <p></p>
-              </div>
-              <div class="navigation">
-                  <button id="next-arrow">→</button>
-              </div>
-              
+            <div class="ans">
+              <p><span>A:</span> Abuja</p>
+            </div>
+            <div class="ans">
+              <p><span>B:</span> Lagos</p>
+            </div>
+            <div class="ans">
+              <p><span>C:</span> Ondo</p>
+            </div>
+            <div class="ans">
+              <p><span>D:</span> Kaduna</p>
+            </div>
+            <div class="price">
+              <p></p>
+            </div>
+            <div class="navigation">
+              <button id="next-arrow">→</button>
+            </div>
           </div>
-      </div>
+        </div>
       </div>
       <div class="middle2">
         <p class="prize">N 50,000</p>
-            <p class="prize">N 40,000</p>
-            <p class="prize">N 35,000</p>
-            <p class="prize">N 30,000</p>
-            <p class="prize">N 25,000</p>
-            <p class="prize">N 20,000</p>
-            <p class="prize">N 17,500</p>
-            <p class="prize">N 14,500</p>
-            <p class="prize">N 12,000</p>
-            <p class="prize">N 9,500</p>
-            <p class="prize">N 7,500</p>
-            <p class="prize">N 5,500</p>
-            <p class="prize">N 4,000</p>
-            <p class="prize">N 2,500</p>
-            <p class="prize">N 1,000</p>
+        <p class="prize">N 40,000</p>
+        <p class="prize">N 35,000</p>
+        <p class="prize">N 30,000</p>
+        <p class="prize">N 25,000</p>
+        <p class="prize">N 20,000</p>
+        <p class="prize">N 17,500</p>
+        <p class="prize">N 14,500</p>
+        <p class="prize">N 12,000</p>
+        <p class="prize">N 9,500</p>
+        <p class="prize">N 7,500</p>
+        <p class="prize">N 5,500</p>
+        <p class="prize">N 4,000</p>
+        <p class="prize">N 2,500</p>
+        <p class="prize">N 1,000</p>
       </div>
     </div>
     <audio id="sure" src="assets/sound/final.mp3"></audio>
     <audio id="start" autoplay src="assets/sound/start.mp3"></audio>
     <audio id="ingame" src="assets/sound/ingame.mp3" autoplay loop></audio>
     <audio id="win" src="assets/sound/win.mp3"></audio>
-    </body>
-    <script src="script.js"></script>
-    <script> 
+  </body>
+  <script src="script.js"></script>
+  <script>
     const sound = document.getElementById("sure");
     const mute = document.getElementById("mute");
     const ingame = document.getElementById("ingame");
     const win = document.getElementById("win");
-    
+
     mute.addEventListener("click", () => {
-    ingame.muted = !ingame.muted;
-    mute.textContent = ingame.muted ? "Unmute" : "Mute";
-  });
-    </script>
-   </html>
+      ingame.muted = !ingame.muted;
+      mute.textContent = ingame.muted ? "Unmute" : "Mute";
+    });
+  </script>
+</html>
