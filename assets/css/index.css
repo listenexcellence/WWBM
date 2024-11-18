@@ -7,6 +7,16 @@
 }
 body {
   background-color: #130f21;
+  background-size: cover;
+  background-position: left;
+  padding: 20px;
+}
+.body {
+  background-image:
+    linear-gradient(to bottom, rgba(4, 11, 49, 0.52), 
+    rgba(19, 15, 66, 0.73)), url("../img/WWTBAM.jpg");
+  background-size: cover;
+  background-position: left;
   padding: 20px;
 }
 .main {
@@ -38,7 +48,7 @@ body {
   padding: 15px 50px;
   text-transform: uppercase;
   border-radius: 5px;
-  background-color: #130f21;
+  background-color: transparent;
   border: 1px solid #fff;
   color: #fff;
   cursor: pointer;
@@ -49,6 +59,9 @@ p {
 }
 h3 {
   color: #fed52c;
+}
+#mute{
+  position: fixed;
 }
 .rows {
   display: flex;
@@ -67,7 +80,9 @@ h3 {
   flex-direction: column;
   gap: 18px;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
+  height: 90vh;
+  width: 100%;
 }
 .options {
   display: flex;
@@ -133,6 +148,18 @@ h3 {
   color: white;
   text-align: center;
 }
+.prize{
+  font-weight: 900;
+  color: #fd962d;
+}
+.prize.special{
+  color: #fff;
+}
+.activePrize{
+  border: 1.5px solid #ffc672;
+  width: 100%;
+  border-radius: 30px;
+}
 /* .active{
     background-color: #FD962D;
     color: #fff;
@@ -141,12 +168,19 @@ h3 {
 } */
 .middle2 {
   display: flex;
+  position: fixed;
+  right: 1.5%;
   flex-direction: column;
-  gap: 10px;
+  gap: 5px;
   align-items: center;
+  border: 2px solid #fd952d70;
+  padding: 20px;
+  width: 180px;
+  background-color: #100c1f;
 }
 .middle2 p {
-  font-size: 13px;
+  font-size: 15px;
+  text-align: center;
 }
 .ruleBody {
   padding: 50px 100px 20px 100px;
