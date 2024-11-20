@@ -13,8 +13,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $difficulty_level = $_POST['difficulty_level'];
 
 
-    $stmt = $conn->prepare("INSERT INTO questions (question, option_a, option_b, option_c, option_d, correct_answer, difficulty_level) VALUES (?, ?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("ssssssi", $question, $option_a, $option_b, $option_c, $option_d, $correct_answer, $difficulty_level);
+    $session = $_POST['session'];
+
+    $stmt = $conn->prepare("INSERT INTO questions (question, option_a, option_b, option_c, option_d, correct_answer, difficulty_level, session) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssii", $question, $option_a, $option_b, $option_c, $option_d, $correct_answer, $difficulty_level, $session);
 
     if ($stmt->execute()) {
         echo "<p>Question added successfully!</p>";
@@ -60,9 +62,19 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         </select><br><br>
         
         <label for="difficulty_level">Difficulty Level:</label><br>
-        <input type="number" id="difficulty_level" name="difficulty_level" min="1" max="3" value="1" required><br><br>
+        <input type="number" id="difficulty_level" name="difficulty_level" min="1" max="15" value="1" required><br><br>
+        <label for="session">Session:</label><br>
+<select id="session" name="session" required>
+    <option value="1">Session 1</option>
+    <option value="2">Session 2</option>
+    <option value="3">Session 3</option>
+    <option value="4">Session 4</option>
+</select><br><br>
+
         
         <input type="submit" value="Add Question">
     </form>
+
+
 </body>
 </html>

@@ -304,13 +304,23 @@ footer p {
 }
 .hovered {
   background-color: #fd962d;
+  color: white;
+}
+.hovered span {
+  color: white;
 }
 .correct {
   background-color: green;
   color: white;
 }
+.correct span {
+  color: white;
+}
 .incorrect {
   background-color: red;
+  color: white;
+}
+.incorrect span {
   color: white;
 }
 .middle2 .prize.active {
@@ -345,6 +355,7 @@ footer p {
 #next-arrow {
   display: none;
 }
+.ne
 #fiftyFiftyLifeline.used {
   background-color: #888; /* Grayed out */
   color: #fff;
@@ -376,6 +387,39 @@ footer p {
   color: transparent;
   padding: 8px 20px; /* Make the text invisible */
 }
+@keyframes slideIn {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+.answerContain .ans {
+  opacity: 0; /* Initially hidden */
+  transform: translateX(-100%); /* Start off-screen */
+  animation: slideIn 0.5s ease-out forwards;
+}
+
+.answerContain .ans:nth-child(1) {
+  animation-delay: 10s;
+}
+
+.answerContain .ans:nth-child(2) {
+  animation-delay: 1.9s;
+}
+
+.answerContain .ans:nth-child(3) {
+  animation-delay: 2.3s;
+}
+
+.answerContain .ans:nth-child(4) {
+  animation-delay: 4.8s;
+}
+
 /* .popup {
        display: none !important; 
        position: absolute;
