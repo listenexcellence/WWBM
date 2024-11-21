@@ -28,9 +28,13 @@ function useFiftyFifty() {
     option2.querySelector("p").textContent = "";
   }
 
+  // Change the image to indicate the lifeline has been used
+  const fiftyFiftyImage = document.getElementById("fiftyFiftyLifeline");
+  fiftyFiftyImage.src = "assets/img/Classic5050used.webp"; // Path to the new image
+
   // Disable the lifeline button after use
-  document.getElementById("fiftyFiftyLifeline").disabled = true;
-  document.getElementById("fiftyFiftyLifeline").classList.add("used");
+  fiftyFiftyImage.disabled = true;
+  fiftyFiftyImage.classList.add("used");
 }
 
 const questionLoadAudio = document.getElementById("questionLoadAudio");
@@ -158,8 +162,16 @@ document.querySelectorAll(".answerContain .ans").forEach((ansDiv) => {
       } else {
         this.classList.remove("hovered");
         this.classList.add("incorrect");
+
+        // Play the wrong answer audio
+        const wrongAnswerAudio = document.getElementById("wrongAnswerAudio");
+        wrongAnswerAudio.play();
+
+        // Optional: Add a delay before revealing the correct answer
+        setTimeout(() => {
+          showCorrectAnswer();
+        }, 2000); // 2 seconds delay
       }
-      showCorrectAnswer();
     } else {
       selectedAnswer.classList.remove("hovered");
       selectedAnswer = this;
@@ -256,21 +268,42 @@ function useAskAudience() {
   if (askAudienceUsed) return;
 
   askAudienceUsed = true;
-  document.getElementById("askAudienceLifeline").disabled = true;
-  document.getElementById("askAudienceLifeline").classList.add("used");
+
+  const lifelineButton = document.getElementById("askAudienceLifeline");
+  lifelineButton.disabled = true;
+  lifelineButton.classList.add("used");
+
+  // Play the Ask the Audience sound
+  const askAudienceAudio = document.getElementById("askAudienceSound");
+  askAudienceAudio.play();
+
+  // Remove the button after the animation ends
+  lifelineButton.addEventListener("animationend", () => {
+    lifelineButton.style.display = "none";
+  });
+
+  // Additional logic for the lifeline can be added here
 }
+
 let phoneFriendUsed = false;
 
 function usePhoneAFriend() {
   if (phoneFriendUsed) return;
 
   phoneFriendUsed = true;
-  document.getElementById("phoneFriendLifeline").disabled = true;
-  document.getElementById("phoneFriendLifeline").classList.add("used");
+
+  const lifelineButton = document.getElementById("phoneFriendLifeline");
+  lifelineButton.disabled = true;
+  lifelineButton.classList.add("used");
 
   // Play the Phone a Friend audio effect
   const phoneAFriendAudio = document.getElementById("phoneAFriendAudio");
   phoneAFriendAudio.play();
+
+  // Remove the button after the animation ends
+  lifelineButton.addEventListener("animationend", () => {
+    lifelineButton.style.display = "none";
+  });
 
   // Show the timer container immediately
   const timerContainer = document.getElementById("phoneAFriendTimerContainer");

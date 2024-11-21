@@ -9,7 +9,8 @@ if (!isset($_SESSION['quiz_completed']) || !$_SESSION['quiz_completed']) {
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['restart_quiz'])) {
     session_unset();
     session_destroy();
-    header('Location: quiz.php');
+    header('Location: quiz.html
+');
     exit();
 }
 ?>

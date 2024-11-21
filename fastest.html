@@ -6,6 +6,19 @@
   <title>Fastest Finger First</title>
   <link rel="stylesheet" href="assets/css/fastest.css">
   <style>
+       .alertClose {
+  position: absolute;
+  right: 49px;
+  top: 25px;
+  font-weight: 900;
+  padding-top: 0px;
+  font-size: 17px;
+  color: #ffffff;
+  background-color: #fd962d;
+  border: 2px solid #fd962d;
+  border-radius: 50%;
+  padding: 8px 8px;
+}
     .question {
       font-size: 20px;
       font-weight: bold;
@@ -17,7 +30,7 @@
   gap: 10px;
   justify-content: center; /* Vertically center */
   align-items: center; /* Horizontally center */
-  height: 100vh; /* Full viewport height */
+  height: 80vh; /* Full viewport height */
 }
     .ans {
       position: relative;
@@ -44,7 +57,7 @@
       transition: opacity 0.5s ease, transform 0.5s ease;
     }
     #show-answer-btn, #next-question-btn {
-      margin-top: 20px;
+      margin-top: 10px;
       padding: 10px 20px;
       font-size: 16px;
       font-weight: bold;
@@ -61,6 +74,9 @@
   </style>
 </head>
 <body class="quiz-body">
+  <a onclick="playSound()" href="index.html">
+    <span class="alertClose">X</span>
+  </a>
   <div class="question-container">
     <div id="question" class="question">
       <!-- Question will be dynamically added -->
@@ -72,13 +88,12 @@
     <button id="next-question-btn" style="display: none;">Next Question</button>
 
     <!-- Audio Element -->
-    <audio id="optionSound" src="assets/sound/Four Answers in Order.mp3"></audio>
+    <audio id="optionSound" src="assets/sound/Four Answers in Order.mp3" ></audio>
     <!-- Audio Element for Question -->
-    <audio id="questionSound" src="assets/sound/Fastest Finger First.mp3" preload="auto"></audio>
+    <audio id="questionSound" src="assets/sound/Fastest Finger First.mp3"loop autoplay></audio>
 
 
   </div>
-
   <script>
     // List of questions
     const questions = [
@@ -99,80 +114,87 @@
         correctOrder: ["One", "Two", "Three", "Four"],
       },
     ];
-
+  
     let currentQuestionIndex = 0; // Tracks the current question
     const questionElement = document.getElementById("question");
     const optionsContainer = document.getElementById("options");
     const showAnswerBtn = document.getElementById("show-answer-btn");
     const nextQuestionBtn = document.getElementById("next-question-btn");
     const optionSound = document.getElementById("optionSound");
-
+    const questionSound = document.getElementById("questionSound");
+  
+    // Function to play the question sound
+    function playQuestionSound() {
+      questionSound.currentTime = 0; // Ensure it starts from the beginning
+      questionSound.play();
+    }
+  
     // Load a question
     function loadQuestion(index) {
-  const questionData = questions[index];
-  questionElement.textContent = questionData.question;
-  optionsContainer.innerHTML = "";
-
-  // Play question sound
-  const questionSound = document.getElementById("questionSound");
-  questionSound.currentTime = 0; // Ensure it starts from the beginning
-  questionSound.play();
-
-  // Shuffle options for display
-  const shuffledOptions = [...questionData.correctOrder].sort(() => Math.random() - 0.5);
-
-  // Create options
-  shuffledOptions.forEach(option => {
-    const optionElement = document.createElement("div");
-    optionElement.className = "ans";
-    optionElement.textContent = option;
-    optionsContainer.appendChild(optionElement);
-
-    // Add fade-in effect
-    setTimeout(() => {
-      optionElement.classList.add("fade-in");
-    }, 50);
-  });
-
-  // Reset buttons
-  showAnswerBtn.disabled = false;
-  showAnswerBtn.style.display = "inline-block";
-  nextQuestionBtn.style.display = "none";
-}
-
-
+      const questionData = questions[index];
+      questionElement.textContent = questionData.question;
+      optionsContainer.innerHTML = "";
+  
+      // Explicitly play the question sound
+      playQuestionSound();
+  
+      // Shuffle options for display
+      const shuffledOptions = [...questionData.correctOrder].sort(() => Math.random() - 0.5);
+  
+      // Create options
+      shuffledOptions.forEach(option => {
+        const optionElement = document.createElement("div");
+        optionElement.className = "ans";
+        optionElement.textContent = option;
+        optionsContainer.appendChild(optionElement);
+  
+        // Add fade-in effect
+        setTimeout(() => {
+          optionElement.classList.add("fade-in");
+        }, 50);
+      });
+  
+      // Reset buttons
+      showAnswerBtn.disabled = false;
+      showAnswerBtn.style.display = "inline-block";
+      nextQuestionBtn.style.display = "none";
+    }
+  
     // Show the correct answer
-   // Show the correct answer
-showAnswerBtn.addEventListener("click", () => {
-  const questionData = questions[currentQuestionIndex];
-
-  // Start playing the audio once for the entire sequence
-  optionSound.play();
-
-  // Clear existing options
-  optionsContainer.innerHTML = "";
-
-  // Add correct options with sound and animation
-  questionData.correctOrder.forEach((answer, index) => {
-    setTimeout(() => {
-      const newOption = document.createElement("div");
-      newOption.className = "ans";
-      newOption.textContent = answer;
-      optionsContainer.appendChild(newOption);
-
-      // Add fade-in effect
-      setTimeout(() => {
-        newOption.classList.add("fade-in");
-      }, 50); // Small delay for smooth animation
-    }, index * 3000); // 3-second delay between each option
-  });
-
-  // Disable the show-answer button and enable the next-question button
-  showAnswerBtn.disabled = true;
-  nextQuestionBtn.style.display = "inline-block";
-});
-
-
+    showAnswerBtn.addEventListener("click", () => {
+      const questionData = questions[currentQuestionIndex];
+  
+      // Start playing the audio for the options
+      optionSound.play();
+  
+      // When the optionSound finishes, resume questionSound
+      optionSound.addEventListener("ended", () => {
+        questionSound.play();
+      });
+  
+      // Clear existing options
+      optionsContainer.innerHTML = "";
+  
+      // Add correct options with sound and animation
+      questionData.correctOrder.forEach((answer, index) => {
+        setTimeout(() => {
+          const newOption = document.createElement("div");
+          newOption.className = "ans";
+          newOption.textContent = answer;
+          optionsContainer.appendChild(newOption);
+  
+          // Add fade-in effect
+          setTimeout(() => {
+            newOption.classList.add("fade-in");
+          }, 50); // Small delay for smooth animation
+        }, index * 3000); // 3-second delay between each option
+      });
+  
+      // Disable the show-answer button and enable the next-question button
+      showAnswerBtn.disabled = true;
+      nextQuestionBtn.style.display = "inline-block";
+    });
+  
     // Load the next question
     nextQuestionBtn.addEventListener("click", () => {
       currentQuestionIndex++;
@@ -184,9 +206,10 @@ showAnswerBtn.addEventListener("click", () => {
         nextQuestionBtn.style.display = "none";
       }
     });
-
+  
     // Initial load
     loadQuestion(currentQuestionIndex);
   </script>
-</body>
+  
+  </body>
 </html>

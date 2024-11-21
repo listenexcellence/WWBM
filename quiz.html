@@ -8,9 +8,9 @@
 .navigation {
 text-align: right;
 margin-top: 0px;
-position: relative;
-bottom: 0px;
-left: 360px;
+position: fixed;
+bottom: 20px;
+right: 30px;
 }
 
 #next-arrow {
@@ -35,7 +35,10 @@ cursor: pointer;
   color: #333;
 }
 
-
+#next-session {
+background-color: #18152c00;
+border: none;
+}
 
 
   </style>
@@ -86,6 +89,10 @@ cursor: pointer;
                 <audio id="questionLoadAudio" src="assets/sound/Question.mp3" loop ></audio>
                 <audio id="correctAnswerAudio" src="assets/sound/win.mp3"></audio>
                 <audio id="phoneAFriendAudio" src="assets/sound/Phone-A-Friend.mp3"></audio>
+                <audio id="askAudienceSound" src="assets/sound/Ask The Audience.mp3"></audio>
+                <audio id="wrongAnswerAudio" src="assets/sound/Loose.mp3"></audio>
+
+
 
 
 
@@ -122,7 +129,7 @@ cursor: pointer;
     </div> 
     
     </div>
-    <button id="next-session" style="color:#fd962d">Next Session</button> 
+    <button id="next-session" style="color:#e99643">Next Session</button> 
     <audio id="sure" src="assets/sound/final.mp3"></audio>
     <audio id="start" autoplay src="assets/sound/start.mp3"></audio>
     <audio id="ingame" src="assets/sound/ingame.mp3" autoplay loop></audio>

@@ -26,11 +26,10 @@ body {
   right: 50px;
 }
 #start {
-  border-radius: 1px solid #ba060600;
-  border-radius: 10px;
-  padding: 10px 30px;
   color: #fd962d;
   font-size: 20px;
+  border: none;
+  background-color: #0f0a2000;
   font-weight: 700;
 }
 .btnContain {
@@ -50,13 +49,13 @@ body {
 }
 
 .made {
-  color: #fd962d;
+  color: #ffffff;
   position: absolute;
   bottom: 50px;
 }
 .wb {
   position: absolute;
-  color: #fd962d;
+  color: #ffffff;
   bottom: 72px;
 }
 .heart {
@@ -130,7 +129,7 @@ body {
   flex-direction: column;
   gap: 2px;
   align-items: center;
-  border: 2px solid #fd952d70;
+  border: 2px solid #ed9f339f;
   padding: 10px;
   width: 240px;
   background-color: #100c1f;
@@ -158,7 +157,7 @@ body {
     0 0 30px 10px rgba(235, 236, 202, 0.8),
     0 0 40px 15px rgba(138, 43, 226, 0.8), 0 0 50px 20px rgba(255, 20, 147, 0.8);
   clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
   text-align: center;
   line-height: 51px;
@@ -184,7 +183,7 @@ body {
   height: 50px;
   background-color: #130f21;
   clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
-  font-size: 18px;
+  font-size: 25px;
   font-weight: bold;
   text-align: center;
   line-height: 50px;
@@ -239,13 +238,13 @@ transition: all 0.3s ease-in-out;
 }
 .prize {
   font-weight: 900;
-  color: #fd962d;
+  color: #eb953f;
 }
 .prize.special {
   color: #fff;
 }
 .activePrize {
-  border: 1.5px solid #ffc672;
+  border: 1.5px solid #f9c87e;
   width: 100%;
   border-radius: 30px;
 }
@@ -286,7 +285,7 @@ transition: all 0.3s ease-in-out;
 }
 .ruleBody p {
   color: #fd962d;
-  font-size: 19px;
+  font-size: 21px;
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   padding: 20px 0 0 0;
   line-height: 28px;
@@ -325,7 +324,7 @@ footer p {
   color: white;
 }
 .middle2 .prize.active {
-  background-color: #fd962d;
+  background-color: #f89b3d;
   color: #fff;
   clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
   padding: 4px 60px;
@@ -356,8 +355,7 @@ footer p {
 #next-arrow {
   display: none;
 }
-.ne
-#fiftyFiftyLifeline.used {
+.ne #fiftyFiftyLifeline.used {
   background-color: #888; /* Grayed out */
   color: #fff;
   cursor: not-allowed;
