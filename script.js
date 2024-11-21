@@ -11,6 +11,10 @@ function useFiftyFifty() {
 
   fiftyFiftyUsed = true;
 
+  // Play the 50:50 audio effect
+  const fiftyFiftyAudio = document.getElementById("fiftyFiftyAudio");
+  fiftyFiftyAudio.play();
+
   const incorrectOptions = Array.from(
     document.querySelectorAll(".answerContain .ans")
   ).filter((option) => option.dataset.correct === "false");
@@ -29,8 +33,40 @@ function useFiftyFifty() {
   document.getElementById("fiftyFiftyLifeline").classList.add("used");
 }
 
+const questionLoadAudio = document.getElementById("questionLoadAudio");
+const correctAnswerAudio = document.getElementById("correctAnswerAudio");
+
+function startBackgroundAudio() {
+  questionLoadAudio.play();
+}
+
+function stopBackgroundAudio() {
+  questionLoadAudio.pause();
+  questionLoadAudio.currentTime = 0; // Reset to the start
+}
+
+function handleCorrectAnswer() {
+  // Stop the question audio
+  stopBackgroundAudio();
+
+  // Play the correct answer audio
+  correctAnswerAudio.play();
+
+  // Once the correct answer audio finishes, ensure the question audio does not restart immediately
+  correctAnswerAudio.onended = () => {
+    // Enable the next arrow after correct answer audio ends
+    enableNextArrow();
+  };
+}
+
 function loadQuestion() {
   selectedAnswer = null;
+
+  // Reset and ensure the question audio plays for the new question
+  if (questionLoadAudio.paused) {
+    questionLoadAudio.currentTime = 0; // Start from the beginning
+    questionLoadAudio.play();
+  }
 
   document.querySelectorAll(".answerContain .ans").forEach((ansDiv) => {
     ansDiv.classList.remove("hovered", "correct", "incorrect");
@@ -73,29 +109,6 @@ function loadQuestion() {
     .catch((error) => console.error("Error loading question:", error));
 }
 
-document.getElementById("next-session").addEventListener("click", () => {
-  // Increment session before sending it
-  currentSession++;
-
-  // Update the session in the backend
-  fetch("update_session.php", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ session: currentSession }),
-  })
-    .then((response) => response.json())
-    .then((data) => {
-      console.log("Session updated:", data);
-
-      // Load the first question of the new session
-      loadQuestion();
-
-      // Hide the "Next Session" button
-      // document.getElementById("next-session").style.display = "none";
-    })
-    .catch((error) => console.error("Error updating session:", error));
-});
-
 document.querySelectorAll(".answerContain .ans").forEach((ansDiv) => {
   ansDiv.addEventListener("click", function () {
     if (selectedAnswer === null) {
@@ -108,7 +121,9 @@ document.querySelectorAll(".answerContain .ans").forEach((ansDiv) => {
         incrementCorrectAnswers();
         updatePrizeLevel();
         showPrize();
-        enableNextArrow();
+
+        // Handle correct answer audio
+        handleCorrectAnswer();
       } else {
         this.classList.remove("hovered");
         this.classList.add("incorrect");
@@ -132,20 +147,21 @@ function showCorrectAnswer() {
 
 function updatePrizeLevel() {
   if (currentPrizeLevel < prizeValues.length - 1) {
+    // Increment the prize level
     currentPrizeLevel++;
+
+    // Select all prize elements
     const prizeElements = document.querySelectorAll(".middle2 .prize");
 
     if (prizeElements.length >= prizeValues.length) {
+      // Remove the "active" class from all elements first
+      prizeElements.forEach((element) => element.classList.remove("active"));
+
+      // Add the "active" class to the current prize level
       if (prizeElements[prizeElements.length - currentPrizeLevel]) {
         prizeElements[prizeElements.length - currentPrizeLevel].classList.add(
           "active"
         );
-      }
-
-      if (prizeElements[prizeElements.length - currentPrizeLevel - 1]) {
-        prizeElements[
-          prizeElements.length - currentPrizeLevel - 1
-        ].classList.remove("active");
       }
     } else {
       console.error(
@@ -187,14 +203,16 @@ function showPrize() {
 }
 
 function enableNextArrow() {
-  // Show the next arrow
   document.getElementById("next-arrow").style.display = "inline-block";
 }
 
 document.getElementById("next-arrow").addEventListener("click", () => {
-  loadQuestion(); // Load the next question
-  document.getElementById("next-arrow").style.display = "none"; // Hide the next arrow again
+  loadQuestion();
+  document.getElementById("next-arrow").style.display = "none";
 });
+
+// Start the question background audio on page load
+window.addEventListener("load", startBackgroundAudio);
 
 let askAudienceUsed = false;
 
@@ -214,20 +232,38 @@ function usePhoneAFriend() {
   document.getElementById("phoneFriendLifeline").disabled = true;
   document.getElementById("phoneFriendLifeline").classList.add("used");
 
-  const timerDiv = document.getElementById("phoneTimer");
-  timerDiv.style.display = "inline";
-  let timeLeft = 30;
+  // Play the Phone a Friend audio effect
+  const phoneAFriendAudio = document.getElementById("phoneAFriendAudio");
+  phoneAFriendAudio.play();
 
-  const countdownInterval = setInterval(() => {
-    timerDiv.textContent = timeLeft;
-    timeLeft--;
+  // Show the timer container immediately
+  const timerContainer = document.getElementById("phoneAFriendTimerContainer");
+  timerContainer.style.display = "block";
 
-    if (timeLeft < 0) {
-      clearInterval(countdownInterval);
-      timerDiv.style.display = "none";
-      alert("Time's up! The call has ended.");
-    }
-  }, 1000);
+  // Set up initial timer text
+  const timerText = document.getElementById("phoneAFriendTime");
+  timerText.textContent = "00:30"; // 30 seconds timer
+
+  let timeLeft = 30; // Total countdown time
+
+  // Set a 15-second delay before the timer starts counting
+  setTimeout(() => {
+    const countdownInterval = setInterval(() => {
+      // Update timer display
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      timerText.textContent = `${String(minutes).padStart(2, "0")}:${String(
+        seconds
+      ).padStart(2, "0")}`;
+
+      timeLeft--;
+
+      if (timeLeft < 0) {
+        clearInterval(countdownInterval);
+        timerContainer.style.display = "none"; // Hide the timer when done
+      }
+    }, 1000);
+  }, 12000); // 15-second delay before the timer starts counting
 }
 
 function triggerAnimation() {

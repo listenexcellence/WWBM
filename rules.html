@@ -5,6 +5,11 @@
     <pnk rel="stylesheet" type="text/css" href="assets/css/index.css" />
     <title>Rules</title>
     <style>
+      *{
+        margin: 0;
+        padding:0;
+        box-sizing: border-box;
+      }
       .alertClose {
   position: absolute;
   right: 49px;
@@ -56,9 +61,11 @@ footer p {
     </style>
 </head>
 <body class="ruleBody">
-    <a onclick="playSound()" href="index.html">
-        <span class="alertClose">X</span>
-    </a>
+  <audio id="rulesAudio" src="assets/sound/Explain The Knockout Game.mp3" preload="auto"></audio>
+
+  <a onclick="playSound()" href="index.html">
+    <span class="alertClose">X</span>
+  </a>
     
     <h1>Rules of the Game Who Wants To Be A Millionaire - TheTrybeCo</h1>
     <div class="rule">
@@ -132,5 +139,21 @@ footer p {
         2024 Online Quiz WWBM - <a href="www.thetrybeco.org">TheTrybeCo.</a>
       </p>
     </footer>
+    <script>
+      // Play the audio when the page loads
+      window.addEventListener("load", () => {
+        const audio = document.getElementById("rulesAudio");
+        audio.play().catch((error) => {
+          console.error("Audio playback failed:", error);
+        });
+      });
+
+      // Function to play the sound when the "X" is clicked
+      function playSound() {
+        const audio = document.getElementById("rulesAudio");
+        audio.pause();
+        audio.currentTime = 0; // Reset the audio
+      }
+    </script>
   </body>
 </html>

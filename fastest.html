@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fastest Finger First</title>
+  <link rel="stylesheet" href="assets/css/fastest.css">
+  <style>
+    .question {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+    .options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  justify-content: center; /* Vertically center */
+  align-items: center; /* Horizontally center */
+  height: 100vh; /* Full viewport height */
+}
+    .ans {
+      position: relative;
+      width: 400px;
+      height: 70px;
+      color: #ffab24;
+      background-color: #130f21;
+      clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+      font-size: 24px;
+      font-weight: bold;
+      text-align: center;
+      line-height: 70px;
+      box-shadow: 0 0 15px 5px rgba(72, 171, 224, 0.8),
+        0 0 30px 10px rgba(235, 236, 202, 0.8),
+        0 0 40px 15px rgba(138, 43, 226, 0.8), 0 0 50px 20px rgba(255, 20, 147, 0.8);
+      cursor: pointer;
+      transition: all 0.3s ease-in-out;
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    .ans.fade-in {
+      opacity: 1;
+      transform: translateY(0);
+      transition: opacity 0.5s ease, transform 0.5s ease;
+    }
+    #show-answer-btn, #next-question-btn {
+      margin-top: 20px;
+      padding: 10px 20px;
+      font-size: 16px;
+      font-weight: bold;
+      border: none;
+      border-radius: 5px;
+      background-color: #fd962d;
+      color: white;
+      cursor: pointer;
+    }
+    #show-answer-btn:disabled, #next-question-btn:disabled {
+      background-color: #ccc;
+      cursor: not-allowed;
+    }
+  </style>
+</head>
+<body class="quiz-body">
+  <div class="question-container">
+    <div id="question" class="question">
+      <!-- Question will be dynamically added -->
+    </div>
+    <div id="options" class="options">
+      <!-- Options will be dynamically added -->
+    </div>
+    <button id="show-answer-btn">Show Correct Answer</button>
+    <button id="next-question-btn" style="display: none;">Next Question</button>
+
+    <!-- Audio Element -->
+    <audio id="optionSound" src="assets/sound/Four Answers in Order.mp3"></audio>
+    <!-- Audio Element for Question -->
+    <audio id="questionSound" src="assets/sound/Fastest Finger First.mp3" preload="auto"></audio>
+
+
+  </div>
+
+  <script>
+    // List of questions
+    const questions = [
+      {
+        question: "Arrange these countries in alphabetical order:",
+        correctOrder: ["Ghana", "Kenya", "Nigeria", "Zambia"],
+      },
+      {
+        question: "Arrange these planets from the sun:",
+        correctOrder: ["Mercury", "Venus", "Earth", "Mars"],
+      },
+      {
+        question: "Arrange these colors in the order of a rainbow:",
+        correctOrder: ["Red", "Orange", "Yellow", "Green"],
+      },
+      {
+        question: "Arrange these numbers in ascending order:",
+        correctOrder: ["One", "Two", "Three", "Four"],
+      },
+    ];
+
+    let currentQuestionIndex = 0; // Tracks the current question
+    const questionElement = document.getElementById("question");
+    const optionsContainer = document.getElementById("options");
+    const showAnswerBtn = document.getElementById("show-answer-btn");
+    const nextQuestionBtn = document.getElementById("next-question-btn");
+    const optionSound = document.getElementById("optionSound");
+
+    // Load a question
+    function loadQuestion(index) {
+  const questionData = questions[index];
+  questionElement.textContent = questionData.question;
+  optionsContainer.innerHTML = "";
+
+  // Play question sound
+  const questionSound = document.getElementById("questionSound");
+  questionSound.currentTime = 0; // Ensure it starts from the beginning
+  questionSound.play();
+
+  // Shuffle options for display
+  const shuffledOptions = [...questionData.correctOrder].sort(() => Math.random() - 0.5);
+
+  // Create options
+  shuffledOptions.forEach(option => {
+    const optionElement = document.createElement("div");
+    optionElement.className = "ans";
+    optionElement.textContent = option;
+    optionsContainer.appendChild(optionElement);
+
+    // Add fade-in effect
+    setTimeout(() => {
+      optionElement.classList.add("fade-in");
+    }, 50);
+  });
+
+  // Reset buttons
+  showAnswerBtn.disabled = false;
+  showAnswerBtn.style.display = "inline-block";
+  nextQuestionBtn.style.display = "none";
+}
+
+
+    // Show the correct answer
+   // Show the correct answer
+showAnswerBtn.addEventListener("click", () => {
+  const questionData = questions[currentQuestionIndex];
+
+  // Start playing the audio once for the entire sequence
+  optionSound.play();
+
+  // Clear existing options
+  optionsContainer.innerHTML = "";
+
+  // Add correct options with sound and animation
+  questionData.correctOrder.forEach((answer, index) => {
+    setTimeout(() => {
+      const newOption = document.createElement("div");
+      newOption.className = "ans";
+      newOption.textContent = answer;
+      optionsContainer.appendChild(newOption);
+
+      // Add fade-in effect
+      setTimeout(() => {
+        newOption.classList.add("fade-in");
+      }, 50); // Small delay for smooth animation
+    }, index * 3000); // 3-second delay between each option
+  });
+
+  // Disable the show-answer button and enable the next-question button
+  showAnswerBtn.disabled = true;
+  nextQuestionBtn.style.display = "inline-block";
+});
+
+
+    // Load the next question
+    nextQuestionBtn.addEventListener("click", () => {
+      currentQuestionIndex++;
+      if (currentQuestionIndex < questions.length) {
+        loadQuestion(currentQuestionIndex);
+      } else {
+        questionElement.textContent = "Game Over! No more questions.";
+        optionsContainer.innerHTML = "";
+        nextQuestionBtn.style.display = "none";
+      }
+    });
+
+    // Initial load
+    loadQuestion(currentQuestionIndex);
+  </script>
+</body>
+</html>

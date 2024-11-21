@@ -1,0 +1,32 @@
+* {
+  font-family: Inter;
+  color: #fff;
+}
+.quiz-body {
+  background-image: linear-gradient(
+      to bottom,
+      rgba(4, 11, 49, 0.52),
+      rgba(19, 15, 66, 0.73)
+    ),
+    url("../img/bckground.jpg");
+  background-size: cover;
+  background-position: left;
+}
+
+.ans {
+  position: relative;
+  width: 400px; /* Increased width */
+  height: 70px; /* Increased height */
+  font-size: 24px; /* Larger font size */
+  line-height: 70px; /* Matches height for proper vertical alignment */
+  color: #ffab24;
+  background-color: #130f21;
+  clip-path: polygon(5% 0%, 95% 0%, 100% 50%, 95% 100%, 5% 100%, 0% 50%);
+  font-weight: bold;
+  text-align: center;
+  box-shadow: 0 0 15px 5px rgba(72, 171, 224, 0.8),
+    0 0 30px 10px rgba(235, 236, 202, 0.8),
+    0 0 40px 15px rgba(138, 43, 226, 0.8), 0 0 50px 20px rgba(255, 20, 147, 0.8);
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
