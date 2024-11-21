@@ -22,12 +22,28 @@ left: 360px;
    font-size: 24px;
   font-weight: 700;
 cursor: pointer;
+
 }
+.pomodoro-container {
+  font-family: Arial, sans-serif;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.pomodoro-time {
+  font-size: 3rem;
+  color: #333;
+}
+
+
+
+
   </style>
   </head>
   <body class="quiz-body">
     <div class="rows">
       <img id="mute" alt="mute" src="assets/img/mdi_mute.png" />
+      
       <div class="middle">
         
         <img class="logo" alt="logo" src="assets/img/logo2.png" />
@@ -55,6 +71,7 @@ cursor: pointer;
             </div>
             <div class="navigation">
               <button id="next-arrow">→</button>
+              
             </div>
           </div>
         </div>
@@ -65,8 +82,23 @@ cursor: pointer;
           <img alt="audience" id="askAudienceLifeline" onclick="useAskAudience()"src="assets/img/audience.png">
                 <img alt="audience" id="fiftyFiftyLifeline" src="assets/img/50.png" onclick="useFiftyFifty()">
                 <img alt="audience"id="phoneFriendLifeline" src="assets/img/phone.png"  onclick="usePhoneAFriend()">
+                <audio id="fiftyFiftyAudio" src="assets/sound/50-50.mp3"></audio>
+                <audio id="questionLoadAudio" src="assets/sound/Question.mp3" loop ></audio>
+                <audio id="correctAnswerAudio" src="assets/sound/win.mp3"></audio>
+                <audio id="phoneAFriendAudio" src="assets/sound/Phone-A-Friend.mp3"></audio>
+
+
+
                 
-                <div id="phoneTimer" style="display: none; font-weight: bold; color: #f00;">30</div>
+                <div id="phoneAFriendTimerContainer" class="pomodoro-container" style="display: none;">
+                  <div id="phoneAFriendTimer">
+                    <p id="phoneAFriendTime" class="pomodoro-time">00:30</p>
+                  
+                  </div>
+                </div>
+                
+        
+                
 
         </div>
 
@@ -88,11 +120,14 @@ cursor: pointer;
         <p class="prize">1 . N 1,000</p>
       </div>
     </div> 
+    
     </div>
+    <button id="next-session" style="color:#fd962d">Next Session</button> 
     <audio id="sure" src="assets/sound/final.mp3"></audio>
     <audio id="start" autoplay src="assets/sound/start.mp3"></audio>
     <audio id="ingame" src="assets/sound/ingame.mp3" autoplay loop></audio>
     <audio id="win" src="assets/sound/win.mp3"></audio>
+
   </body>
   <script src="script.js"></script>
   <script>
