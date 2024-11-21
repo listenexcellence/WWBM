@@ -74,20 +74,26 @@ function loadQuestion() {
   });
 
   fetch(`get_question.php?session=${currentSession}`)
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+      }
+      return response.json();
+    })
     .then((data) => {
-      console.log("Loaded question data:", data);
+      console.log("Data received from server:", data);
 
       if (data.error) {
-        if (data.error === "No question found.") {
-          // Trigger session transition when no more questions are available
-          transitionToNextSession();
-          return;
+        if (data.error === "Session transitioned, load next session.") {
+          currentSession++;
+          loadQuestion(); // Load next session
+        } else if (data.error === "Quiz completed!") {
+          window.location.href = "completion.php";
         } else {
           document.querySelector(".questContain .quest p").textContent =
             data.error;
-          return;
         }
+        return;
       }
 
       document.querySelector(".questContain .quest p").textContent =
@@ -109,6 +115,31 @@ function loadQuestion() {
     .catch((error) => console.error("Error loading question:", error));
 }
 
+document.getElementById("next-session").addEventListener("click", () => {
+  // Increment session before sending it
+  currentSession++;
+
+  // Update the session in the backend
+  fetch("update_session.php", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ session: currentSession }),
+  })
+    .then((response) => response.json())
+    .then((data) => {
+      console.log("Session updated:", data);
+
+      // Check if the quiz is completed
+      if (data.quiz_completed) {
+        // Redirect to completion page
+        window.location.href = "completion.php";
+      } else {
+        // Load the next question if quiz isn't complete
+        loadQuestion();
+      }
+    })
+    .catch((error) => console.error("Error updating session:", error));
+});
 document.querySelectorAll(".answerContain .ans").forEach((ansDiv) => {
   ansDiv.addEventListener("click", function () {
     if (selectedAnswer === null) {
@@ -176,6 +207,11 @@ function incrementCorrectAnswers() {
     .then((response) => response.json())
     .then((data) => {
       console.log("Correct answers count updated:", data.correct_answers);
+
+      if (data.quiz_completed) {
+        // Redirect to completion page if the quiz is completed
+        window.location.href = "completion.php";
+      }
     })
     .catch((error) => console.error("Error updating correct answers:", error));
 }

@@ -2,6 +2,11 @@
 include("includes/conn.php");
 session_start();
 
+if (isset($_SESSION['quiz_completed']) && $_SESSION['quiz_completed']) {
+    echo json_encode(['error' => 'Quiz completed!']);
+    exit;
+}
+
 if (!isset($_SESSION['session_number'])) {
     $_SESSION['session_number'] = 1; // Start with Session 1
 }
